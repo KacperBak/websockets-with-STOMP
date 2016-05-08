@@ -1,6 +1,7 @@
 package de.kacperbak;
 
 import de.kacperbak.messages.ZippedMessage;
+import de.kacperbak.payload.ZippedPayloadConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.stomp.StompHeaders;

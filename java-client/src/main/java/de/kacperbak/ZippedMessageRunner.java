@@ -1,6 +1,7 @@
 package de.kacperbak;
 
 import de.kacperbak.messages.ZippedMessage;
+import de.kacperbak.payload.ZippedPayloadConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -35,7 +36,7 @@ public class ZippedMessageRunner {
                     ZippedMessage zippedMessage = new ZippedMessage("789");
 
                     //compress payload
-                    byte[] zippedBytes = ZippedPayloadConverter.ObjectToGzip(zippedMessage);
+                    byte[] zippedBytes = ZippedPayloadConverter.objectToGzip(zippedMessage);
 
                     //create headers
                     StompHeaders binaryStompHeaders = new StompHeaders();

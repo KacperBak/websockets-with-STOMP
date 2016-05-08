@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.payload;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ import java.util.zip.GZIPOutputStream;
  */
 public class ZippedPayloadConverter {
 
-    public static byte[] ObjectToGzip(ZippedMessage zippedMessage) throws Exception{
+    public static byte[] objectToGzip(ZippedMessage zippedMessage) throws Exception{
         return jsonToGzip(objectToJson(zippedMessage));
     }
 

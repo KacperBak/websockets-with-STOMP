@@ -27,16 +27,38 @@
 
     <properties>
         <slf4J.log4j.version>1.7.19</slf4J.log4j.version>
+        <com.fasterxml.jackson.version>2.7.3</com.fasterxml.jackson.version>
     </properties>
 
     <!-- Slf4J with latest log4J version 1.2 -->
     <!-- details: http://www.slf4j.org/manual.html#libraries -->
     <dependencies>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>${slf4J.log4j.version}</version>
-    </dependency>
+
+        <!-- Logging with  log4j and slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4J.log4j.version}</version>
+        </dependency>
+
+        <!-- JSON with jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${com.fasterxml.jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${com.fasterxml.jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${com.fasterxml.jackson.version}</version>
+        </dependency>
     </dependencies>
 
     <modules>

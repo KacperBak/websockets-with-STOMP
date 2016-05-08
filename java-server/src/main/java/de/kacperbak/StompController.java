@@ -1,17 +1,18 @@
 package de.kacperbak;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import de.kacperbak.messages.JsonMessage;
+import de.kacperbak.messages.SerializedMessage;
+import de.kacperbak.messages.ZippedMessage;
+import de.kacperbak.payload.ZippedPayloadConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
-import java.io.*;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
-import de.kacperbak.messages.JsonMessage;
-import de.kacperbak.messages.SerializedMessage;
-import de.kacperbak.messages.ZippedMessage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 @Controller
 public class StompController {
@@ -61,39 +62,14 @@ public class StompController {
     public byte[] zip(byte[] message) throws Exception {
         LOGGER.debug("Message arrived on endpoint: '/app/zip'.");
 
-
-        //GgzipBytes2Json
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(message);
-        GZIPInputStream gzipInputStream = new GZIPInputStream(byteArrayInputStream);
-
-        byte[] buffer = new byte[8192];
-        int read = 0;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        while ((read = gzipInputStream.read(buffer)) != -1 ){
-            out.write(buffer, 0, read);
-        }
-        String jsonPayload =  out.toString();
-        gzipInputStream.close();
-        byteArrayInputStream.close();
-
-        //Json2Object
-        ObjectMapper objectMapper = new ObjectMapper();
-        ZippedMessage zippedMessage = objectMapper.readValue(jsonPayload, ZippedMessage.class);
+        //zipped byte array to object
+        ZippedMessage zippedMessage = ZippedPayloadConverter.gzipToObject(message);
+        LOGGER.debug("message.content: {}", zippedMessage.getContent());
 
         //change content
         zippedMessage.setContent(zippedMessage.getContent() + "012");
 
-        //Object2Json
-        String changedJsonPayload = objectMapper.writeValueAsString(zippedMessage);
-
-        //Json2Bytes
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
-        gzipOutputStream.write(jsonPayload.getBytes());
-        byte[] zippedBytes = byteArrayOutputStream.toByteArray();
-        gzipOutputStream.close();
-        byteArrayOutputStream.close();
-
-        return zippedBytes;
+        //object to zipped byte array
+        return ZippedPayloadConverter.objectToGzip(zippedMessage);
     }
 }
