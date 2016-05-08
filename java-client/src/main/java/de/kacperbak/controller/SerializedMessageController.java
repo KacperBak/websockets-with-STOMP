@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.controller;
 
 import de.kacperbak.messages.SerializedMessage;
 import org.slf4j.Logger;
@@ -14,15 +14,15 @@ import java.util.Scanner;
 /**
  * Created by bakka on 01.05.16.
  */
-public class SerializedMessageRunner {
+public class SerializedMessageController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SerializedMessageRunner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SerializedMessageController.class);
     private static final Scanner SCANNER =  new Scanner(System.in);
 
     private StompSession stompSession;
     private StompSession.Subscription subscription;
 
-    public SerializedMessageRunner(StompSession stompSession, StompSession.Subscription subscription) {
+    public SerializedMessageController(StompSession stompSession, StompSession.Subscription subscription) {
         this.stompSession = stompSession;
         this.subscription = subscription;
     }

@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.handler;
 
 import de.kacperbak.messages.SerializedMessage;
 import org.slf4j.Logger;

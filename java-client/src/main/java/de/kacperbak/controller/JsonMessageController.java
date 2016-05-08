@@ -1,7 +1,5 @@
-package de.kacperbak;
+package de.kacperbak.controller;
 
-import de.kacperbak.messages.ZippedMessage;
-import de.kacperbak.payload.ZippedPayloadConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -9,18 +7,20 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.util.Scanner;
+import de.kacperbak.messages.JsonMessage;
 
 /**
  * Created by bakka on 01.05.16.
  */
-public class ZippedMessageRunner {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZippedMessageRunner.class);
+public class JsonMessageController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonMessageController.class);
     private static final Scanner SCANNER =  new Scanner(System.in);
 
     private StompSession stompSession;
     private StompSession.Subscription subscription;
 
-    public ZippedMessageRunner(StompSession stompSession, StompSession.Subscription subscription) {
+    public JsonMessageController(StompSession stompSession, StompSession.Subscription subscription) {
         this.stompSession = stompSession;
         this.subscription = subscription;
     }
@@ -32,22 +32,17 @@ public class ZippedMessageRunner {
         while (loop){
             switch (stdIn){
                 case "send":
-                    //create message
-                    ZippedMessage zippedMessage = new ZippedMessage("789");
-
-                    //compress payload
-                    byte[] zippedBytes = ZippedPayloadConverter.objectToGzip(zippedMessage);
-
                     //create headers
-                    StompHeaders binaryStompHeaders = new StompHeaders();
-                    binaryStompHeaders.setDestination("/app/zip");
-                    binaryStompHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                    StompHeaders jsonStompHeaders = new StompHeaders();
+                    jsonStompHeaders.setDestination("/app/json");
+                    jsonStompHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-                    //send message
-                    stompSession.send(binaryStompHeaders, zippedBytes);
+                    //create and send json message
+                    JsonMessage jsonMessage = new JsonMessage("123");
+                    stompSession.send(jsonStompHeaders, jsonMessage);
 
-                    LOGGER.debug("SEND zipped payload: '{}'", zippedMessage.getContent());
-                    System.out.println("STOMP zipped message send: '" + zippedMessage.getContent() + "'");
+                    LOGGER.debug("SEND json message with payload: '{}'", jsonMessage.getContent());
+                    System.out.println("SEND json message with payload: '" + jsonMessage.getContent() + "'");
                     stdIn = SCANNER.nextLine();
                     break;
 

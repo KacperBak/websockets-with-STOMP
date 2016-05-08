@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,5 +1,11 @@
 package de.kacperbak;
 
+import de.kacperbak.controller.JsonMessageController;
+import de.kacperbak.controller.SerializedMessageController;
+import de.kacperbak.controller.ZippedMessageController;
+import de.kacperbak.handler.JsonMessageHandler;
+import de.kacperbak.handler.SerializedMessageHandler;
+import de.kacperbak.handler.ZippedMessageHandler;
 import org.springframework.messaging.converter.ByteArrayMessageConverter;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -42,7 +48,7 @@ public class App
             Future<StompSession> stompSessionFuture = stompClient.connect(url, jsonMessageHandler);
             stompSession = stompSessionFuture.get();
             subscription = stompSession.subscribe(subscribeUrl, jsonMessageHandler);
-            JsonMessageRunner runner = new JsonMessageRunner(stompSession, subscription);
+            JsonMessageController runner = new JsonMessageController(stompSession, subscription);
             runner.run();
 
         } else if(MessageType.isSerialized(messageType)){
@@ -52,7 +58,7 @@ public class App
             Future<StompSession> stompSessionFuture = stompClient.connect(url, serializedMessageHandler);
             stompSession = stompSessionFuture.get();
             subscription = stompSession.subscribe(subscribeUrl, serializedMessageHandler);
-            SerializedMessageRunner runner = new SerializedMessageRunner(stompSession, subscription);
+            SerializedMessageController runner = new SerializedMessageController(stompSession, subscription);
             runner.run();
         } else if(MessageType.isZip(messageType)){
             String subscribeUrl = "/topic/zip";
@@ -61,7 +67,7 @@ public class App
             Future<StompSession> stompSessionFuture = stompClient.connect(url, zippedMessageHandler);
             stompSession = stompSessionFuture.get();
             subscription = stompSession.subscribe(subscribeUrl, zippedMessageHandler);
-            ZippedMessageRunner runner = new ZippedMessageRunner(stompSession, subscription);
+            ZippedMessageController runner = new ZippedMessageController(stompSession, subscription);
             runner.run();
         }
     }
