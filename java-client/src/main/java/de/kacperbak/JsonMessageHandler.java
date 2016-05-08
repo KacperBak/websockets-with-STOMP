@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
+import de.kacperbak.messages.JsonMessage;
 
 /**
  * Created by bakka on 30.04.16.

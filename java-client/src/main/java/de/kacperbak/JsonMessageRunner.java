@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 
 import java.util.Scanner;
+import de.kacperbak.messages.JsonMessage;
 
 /**
  * Created by bakka on 01.05.16.

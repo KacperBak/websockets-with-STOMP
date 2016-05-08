@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.messages;
 
 import java.io.Serializable;
 

@@ -2,6 +2,7 @@ package de.kacperbak;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.kacperbak.messages.ZippedMessage;
 
 import java.io.*;
 import java.util.zip.GZIPInputStream;

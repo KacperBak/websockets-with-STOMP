@@ -7,9 +7,11 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import de.kacperbak.messages.JsonMessage;
+import de.kacperbak.messages.SerializedMessage;
+import de.kacperbak.messages.ZippedMessage;
 
 @Controller
 public class StompController {
@@ -73,15 +75,6 @@ public class StompController {
         String jsonPayload =  out.toString();
         gzipInputStream.close();
         byteArrayInputStream.close();
-
-//        InputStreamReader inputStreamReader = new InputStreamReader(gzipInputStream, StandardCharsets.UTF_8);
-//        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//        String jsonPayload = (String) objectInputStream.readObject();
-//        bufferedReader.close();
-//        inputStreamReader.close();
-//        objectInputStream.close();
-//        gzipInputStream.close();
-//        byteArrayInputStream.close();
 
         //Json2Object
         ObjectMapper objectMapper = new ObjectMapper();

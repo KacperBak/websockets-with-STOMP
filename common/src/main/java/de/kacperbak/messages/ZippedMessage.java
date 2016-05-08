@@ -1,13 +1,16 @@
-package de.kacperbak;
+package de.kacperbak.messages;
 
-public class JsonMessage {
+/**
+ * Created by bakka on 01.05.16.
+ */
+public class ZippedMessage {
 
-    private String content;
+    String content;
 
-    public JsonMessage() {
+    public ZippedMessage() {
     }
 
-    public JsonMessage(String content) {
+    public ZippedMessage(String content) {
         this.content = content;
     }
 
