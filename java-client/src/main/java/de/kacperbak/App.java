@@ -9,10 +9,13 @@ import de.kacperbak.handler.ZippedMessageHandler;
 import org.springframework.messaging.converter.ByteArrayMessageConverter;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.util.Base64;
 import java.util.concurrent.Future;
 
 /**
@@ -42,11 +45,22 @@ public class App
         WebSocketStompClient stompClient = new WebSocketStompClient(transport);
 
         if(MessageType.isJson(messageType)){
-            String subscribeUrl = "/topic/json";
+
+            //basic authentication
+            WebSocketHttpHeaders webSocketHttpHeaders = new WebSocketHttpHeaders();
+            String usernameAndPassword = "kacper:password";
+            String authorizationValue = "Basic " + Base64Utils.encodeToString(usernameAndPassword.getBytes());
+            webSocketHttpHeaders.set(WebSocketHttpHeaders.AUTHORIZATION, authorizationValue);
+
+            //create message converter
             stompClient.setMessageConverter(new MappingJackson2MessageConverter());
             JsonMessageHandler jsonMessageHandler = new JsonMessageHandler();
-            Future<StompSession> stompSessionFuture = stompClient.connect(url, jsonMessageHandler);
+
+            //connect with basic authentication header
+            Future<StompSession> stompSessionFuture = stompClient.connect(url, webSocketHttpHeaders, jsonMessageHandler);
             stompSession = stompSessionFuture.get();
+
+            String subscribeUrl = "/topic/json";
             subscription = stompSession.subscribe(subscribeUrl, jsonMessageHandler);
             JsonMessageController runner = new JsonMessageController(stompSession, subscription);
             runner.run();
