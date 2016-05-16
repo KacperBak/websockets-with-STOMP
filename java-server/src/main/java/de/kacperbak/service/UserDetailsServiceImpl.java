@@ -1,5 +1,7 @@
-package de.kacperbak;
+package de.kacperbak.service;
 
+import de.kacperbak.domain.StompUser;
+import de.kacperbak.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

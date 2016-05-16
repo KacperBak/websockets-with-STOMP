@@ -1,4 +1,4 @@
-package de.kacperbak;
+package de.kacperbak.controller;
 
 import de.kacperbak.messages.JsonMessage;
 import de.kacperbak.messages.SerializedMessage;

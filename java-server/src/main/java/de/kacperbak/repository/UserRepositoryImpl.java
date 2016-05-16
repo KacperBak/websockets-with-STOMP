@@ -1,5 +1,6 @@
-package de.kacperbak;
+package de.kacperbak.repository;
 
+import de.kacperbak.domain.StompUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
