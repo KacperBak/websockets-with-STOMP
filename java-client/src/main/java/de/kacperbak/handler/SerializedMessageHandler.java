@@ -41,7 +41,7 @@ public class SerializedMessageHandler extends StompSessionHandlerAdapter {
             objectInputStream.close();
             byteArrayInputStream.close();
             switch (type){
-                case "de.kacperbak.SerializedMessage":
+                case "de.kacperbak.messages.SerializedMessage":
                     SerializedMessage serializedMessage = (SerializedMessage) object;
                     LOGGER.debug("message.content: {}", serializedMessage.getContent());
                     break;

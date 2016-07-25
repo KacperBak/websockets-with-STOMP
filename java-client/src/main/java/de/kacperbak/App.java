@@ -66,13 +66,7 @@ public class App
             runner.run();
 
         } else if(MessageType.isSerialized(messageType)){
-            String subscribeUrl = "/topic/ser";
-            stompClient.setMessageConverter(new ByteArrayMessageConverter());
-            SerializedMessageHandler serializedMessageHandler = new SerializedMessageHandler();
-            Future<StompSession> stompSessionFuture = stompClient.connect(url, serializedMessageHandler);
-            stompSession = stompSessionFuture.get();
-            subscription = stompSession.subscribe(subscribeUrl, serializedMessageHandler);
-            SerializedMessageController runner = new SerializedMessageController(stompSession, subscription);
+            SerializedMessageController runner = new SerializedMessageController(stompClient);
             runner.run();
         } else if(MessageType.isZip(messageType)){
             String subscribeUrl = "/topic/zip";
