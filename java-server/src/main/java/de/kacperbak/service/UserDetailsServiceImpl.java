@@ -1,6 +1,6 @@
 package de.kacperbak.service;
 
-import de.kacperbak.domain.StompUser;
+import de.kacperbak.domain.UserDetailsImpl;
 import de.kacperbak.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,10 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        StompUser stompUser = userRepository.findUserByName(s);
-        if (stompUser == null){
+        UserDetailsImpl userDetailsImpl = userRepository.findUserByName(s);
+        if (userDetailsImpl == null){
             throw new UsernameNotFoundException(String.format("User with username: %s not found.", s));
         }
-        return stompUser;
+        return userDetailsImpl;
     }
 }

@@ -1,11 +1,11 @@
 package de.kacperbak.repository;
 
-import de.kacperbak.domain.StompUser;
+import de.kacperbak.domain.UserDetailsImpl;
 
 /**
  * Created by bakka on 16.05.16.
  */
 public interface UserRepository {
 
-    StompUser findUserByName(String username);
+    UserDetailsImpl findUserByName(String username);
 }

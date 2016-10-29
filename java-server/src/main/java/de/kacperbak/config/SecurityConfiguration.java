@@ -40,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().fullyAuthenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and().requiresChannel().antMatchers("/").requiresInsecure();
     }
 
     /**

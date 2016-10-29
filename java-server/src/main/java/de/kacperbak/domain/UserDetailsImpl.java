@@ -9,16 +9,22 @@ import java.util.Set;
 /**
  * Created by bakka on 16.05.16.
  */
-public class StompUser implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private String password;
     private String username;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
     private Set<GrantedAuthority> authorities;
 
-    public StompUser(String password, String username, Set<GrantedAuthority> authorities) {
+    public UserDetailsImpl(String password, String username, Set<GrantedAuthority> authorities, boolean enabled) {
         this.password = password;
         this.username = username;
         this.authorities = authorities;
+        this.isAccountNonLocked = enabled;
+        this.isAccountNonExpired = enabled;
+        this.isCredentialsNonExpired = enabled;
     }
 
     @Override
@@ -38,21 +44,21 @@ public class StompUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.isAccountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.isAccountNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isAccountNonExpired && this.isAccountNonLocked && this.isCredentialsNonExpired;
     }
 }
