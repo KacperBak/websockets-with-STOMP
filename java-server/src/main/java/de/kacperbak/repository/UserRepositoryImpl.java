@@ -36,10 +36,11 @@ public class UserRepositoryImpl implements UserRepository {
         // Authorities
         Set<GrantedAuthority> authorities = Stream.of(new SimpleGrantedAuthority("ROLE_USER")).collect(Collectors.toSet());
 
-        // User password
+        // User credentials
         String userName = "kacper";
         String userPasswordClearText = "password";
-        String userPasswordBCryptEncoded = passwordEncoder.encode(userPasswordClearText);
+        String userPasswordBCryptEncoded = staticHash();
+
         LOGGER.debug("password in clear text: '{}'", userPasswordClearText);
         LOGGER.debug("password encoded: '{}'", userPasswordBCryptEncoded);
 
@@ -50,5 +51,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public UserDetailsImpl findUserByName(String username) {
         return this.userMap.get(username);
+    }
+
+    private String staticHash(){
+        return "$2a$10$VieQ5Itliv2MBFLE.8orGuazoEr5gpgRiQNmJEswG9Ze/pcVa8TFS";
+    }
+
+    private String dynamicHash(String password){
+        return passwordEncoder.encode(password);
     }
 }
